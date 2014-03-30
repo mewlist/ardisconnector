@@ -4,7 +4,25 @@ This gem dissconnect database connection on every request finished.
 
 Rails app process keeps connection to database when request finished.
 
-## データベースコネクションの問題
+# Install
+
+Gemfile に
+
+    gem "ardisconnector", git: "git://github.com/mewlist/ardisconnector.git", require: true
+
+を追記して bundle してください。
+
+# Check middleware
+
+    $ rake middleware
+    use Ardisconnector::Middleware
+    .
+    .
+
+と表示されていれば機能します
+
+
+# データベースコネクションの問題
 
 ActiveRecord はコネクションプーリングにより、コネクションを維持し続けます。
 これをプロセスベースの web サーバで運用すると
