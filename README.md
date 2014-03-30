@@ -8,7 +8,7 @@ This gem dissconnect database connection on every request finished.
 
 Gemfile に
 
-    gem "ardisconnector", git: "git://github.com/mewlist/ardisconnector.git", require: true
+    gem "ardisconnector", require: true
 
 を追記して bundle してください。
 
