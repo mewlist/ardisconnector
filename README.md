@@ -2,7 +2,7 @@
 
 This gem dissconnect database connection on every request finished.  
 
-Rails app process keeps connection to database when request finished.
+(Rails app process keeps connection to database)
 
 # Install
 
