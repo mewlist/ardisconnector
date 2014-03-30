@@ -9,7 +9,7 @@ Rails app process keeps connection to database when request finished.
 ActiveRecord はコネクションプーリングにより、コネクションを維持し続けます。
 これをプロセスベースの web サーバで運用すると
 
-** (process count) x (web server count) **
+**(process count) x (web server count)**
 
 分のコネクションをデータベースへ張り続けることになり  
 サービスの規模によっては、コネクション数を食いつぶしてしまうので  
