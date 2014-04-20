@@ -20,16 +20,18 @@ describe Ardisconnector::Middleware do
   end
 
   describe Rack::BodyProxy do
-    let(:connection)      { Object.new }
-    let(:connection_pool) { Object.new }
+    let(:connection)      { double("connection") }
+    let(:connection_pool) { double("conection_pool") }
+    let(:model)           { double("Model", connection: connection, connection_pool: connection_pool) }
     before do
       ActiveRecord::Base.stub( :connection ) { connection }
       ActiveRecord::Base.stub( :connection_pool ) { connection_pool }
+      Ardisconnector::Middleware.models << model
     end
 
     it 'should disconnect connection when close' do
-      connection.should_receive( :disconnect! )
-      connection_pool.should_receive( :remove ).with( connection )
+      connection.should_receive( :disconnect! ).twice
+      connection_pool.should_receive( :remove ).twice.with( connection )
       middleware.call( env )[2].close
     end
   end

@@ -36,4 +36,10 @@ ActiveRecord はコネクションプーリングにより、コネクション�
 スレッドベースの web サーバでは試してませんが
 多分動くと思います。
 
+## 複数DB接続時
+
+以下のようにして、切断するモデルを追加できます
+
+    Ardisconnector::Middleware.models << OtherDbModel
+
 This project rocks and uses MIT-LICENSE.

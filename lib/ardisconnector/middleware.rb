@@ -1,5 +1,12 @@
 module Ardisconnector
   class Middleware
+    class << self
+      def models
+        @models ||= [ActiveRecord::Base]
+        @models
+      end
+    end
+
     def initialize(app)
       @app = app
     end
@@ -7,9 +14,11 @@ module Ardisconnector
     def call(env)
       res = @app.call env
       res[2] = Rack::BodyProxy.new(res[2]) do
-        conn = ActiveRecord::Base.connection
-        conn.disconnect!
-        ActiveRecord::Base.connection_pool.remove conn
+        self.class.models.each do |klass|
+          conn = klass.connection
+          conn.disconnect!
+          klass.connection_pool.remove conn
+        end
       end
       res
     end
