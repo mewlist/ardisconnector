@@ -4,3 +4,4 @@ gemspec
 
 gem 'rack'
 gem 'activerecord'
+gem 'rspec'

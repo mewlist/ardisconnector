@@ -16,7 +16,7 @@ describe Ardisconnector::Middleware do
   let(:middleware) { Ardisconnector::Middleware.new app }
 
   it 'returns response with BodyProxy' do
-    middleware.call( env )[2].class.should == Rack::BodyProxy
+    expect(middleware.call( env )[2].class).to eq Rack::BodyProxy
   end
 
   describe Rack::BodyProxy do
@@ -24,16 +24,15 @@ describe Ardisconnector::Middleware do
     let(:connection_pool) { double("conection_pool") }
     let(:model)           { double("Model", connection: connection, connection_pool: connection_pool) }
     before do
-      ActiveRecord::Base.stub( :connection ) { connection }
-      ActiveRecord::Base.stub( :connection_pool ) { connection_pool }
+      allow(ActiveRecord::Base).to receive( :connection ) { connection }
+      allow(ActiveRecord::Base).to receive( :connection_pool ) { connection_pool }
       Ardisconnector::Middleware.models << model
     end
 
     it 'should disconnect connection when close' do
-      connection.should_receive( :disconnect! ).twice
-      connection_pool.should_receive( :remove ).twice.with( connection )
+      expect(connection).to receive( :disconnect! ).twice
+      expect(connection_pool).to receive( :remove ).twice.with( connection )
       middleware.call( env )[2].close
     end
   end
 end
-
